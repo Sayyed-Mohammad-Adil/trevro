@@ -1,0 +1,44 @@
+/*
+ ≡  ══════════════════════════════════════◈═════════════════════════════════════
+ ≡  ooooooooooooo                                                                 
+ ≡  8'   888   `8                                                                 
+ ≡       888      oooo d8b  .ooooo.  oooo    ooo oooo    ooo oooo d8b  .ooooo.    
+ ≡       888      `888""8P d88' `88b  `88.  .8'   `88.  .8'  `888""8P d88' `88b   
+ ≡       888       888     888ooo888   `88..8'     `88..8'    888     888   888   
+ ≡       888       888     888    .o    `888'       `888'     888     888   888   
+ ≡      o888o     d888b    `Y8bod8P'     `8'         .8'     d888b    `Y8bod8P'   
+ ≡                                               .o..P'                           
+ ≡                                               `Y8P'                            
+ ≡  ══════════════════════════════════════◈═════════════════════════════════════
+ ≡  ≡≡≡≡≡≡≡≡ ⟦ Author   ⟧  Sayyed Mohammad Adil ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ 
+ ≡  ≡≡≡≡≡≡≡≡ ⟦ Updated  ⟧  01/04/2025 • 00:00:00 AM ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ 
+ ≡  ≡≡≡≡≡≡≡≡ ⟦ License  ⟧  Copyright © 2025–2026. All rights reserved. ≡≡≡≡≡≡≡≡≡ 
+ ≡  ══════════════════════════════════════◈═════════════════════════════════════
+ */
+
+define('modules/socket.io/ticketsUI', [
+  'jquery',
+  'underscore',
+  'moment',
+  'modules/helpers',
+  'modules/navigation',
+  'history'
+], function ($) {
+  var ticketsUI = {}
+
+  ticketsUI.updateSubscribe = function (socket) {
+    socket.removeAllListeners('ticket:subscriber:update')
+    socket.on('ticket:subscriber:update', function (data) {
+      var $subscribeSwitch = $('input#subscribeSwitch[data-subscribe-userId="' + data.user + '"]')
+      if ($subscribeSwitch.length > 0) {
+        if (data.subscribe) {
+          $subscribeSwitch.prop('checked', true)
+        } else {
+          $subscribeSwitch.prop('checked', false)
+        }
+      }
+    })
+  }
+
+  return ticketsUI
+})

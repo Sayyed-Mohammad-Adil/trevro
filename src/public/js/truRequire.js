@@ -1,0 +1,54 @@
+/*
+ ≡  ══════════════════════════════════════◈═════════════════════════════════════
+ ≡  ooooooooooooo                                                                 
+ ≡  8'   888   `8                                                                 
+ ≡       888      oooo d8b  .ooooo.  oooo    ooo oooo    ooo oooo d8b  .ooooo.    
+ ≡       888      `888""8P d88' `88b  `88.  .8'   `88.  .8'  `888""8P d88' `88b   
+ ≡       888       888     888ooo888   `88..8'     `88..8'    888     888   888   
+ ≡       888       888     888    .o    `888'       `888'     888     888   888   
+ ≡      o888o     d888b    `Y8bod8P'     `8'         .8'     d888b    `Y8bod8P'   
+ ≡                                               .o..P'                           
+ ≡                                               `Y8P'                            
+ ≡  ══════════════════════════════════════◈═════════════════════════════════════
+ ≡  ≡≡≡≡≡≡≡≡ ⟦ Author   ⟧  Sayyed Mohammad Adil ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ 
+ ≡  ≡≡≡≡≡≡≡≡ ⟦ Updated  ⟧  01/04/2025 • 00:00:00 AM ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ 
+ ≡  ≡≡≡≡≡≡≡≡ ⟦ License  ⟧  Copyright © 2025–2026. All rights reserved. ≡≡≡≡≡≡≡≡≡ 
+ ≡  ══════════════════════════════════════◈═════════════════════════════════════
+ */
+
+/* eslint-disable node/no-missing-require,node/no-unpublished-require,node/no-missing-require,node/no-unpublished-require,node/no-missing-require,node/no-unpublished-require,node/no-missing-require,node/no-unpublished-require,node/no-unpublished-require,node/no-missing-require,node/no-unpublished-require,node/no-missing-require,node/no-unpublished-require,node/no-missing-require,node/no-unpublished-require */
+// This gets loaded for accessing require from outside Webpack bundle.
+var allMods = {
+  jquery: function () {
+    return require('jquery')
+  },
+  snackbar: function () {
+    return require('snackbar')
+  },
+  underscore: function () {
+    return require('underscore')
+  },
+  helpers: function () {
+    return require('modules/helpers')
+  },
+  datatables: function () {
+    return require('datatables')
+  },
+  dt_ipaddress: function () {
+    return require('dt_ipaddress')
+  },
+  dt_scroller: function () {
+    return require('dt_scroller')
+  },
+  uikit: function () {
+    return require('uikit')
+  }
+}
+
+module.exports = function (modules, cb) {
+  var loadedModules = modules.map(function (x) {
+    return allMods[x]()
+  })
+
+  cb(loadedModules)
+}

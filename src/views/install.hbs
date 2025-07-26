@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trevyro &middot; {{{title}}}</title>
+    <link rel="stylesheet" href="/css/plugins.min.css">
+    <link rel="stylesheet" href="/css/app.min.css">
+    <style type="text/css">
+        html {
+            overflow-x: hidden;
+            height: 100%;
+            font: 400 14px/20px "Roboto", Arial, sans-serif;
+        }
+        body {
+            background: #eee;
+            text-align: center;
+            font-family: "Roboto", Arial, sans-serif;
+            height: 100%;
+            -webkit-font-smoothing: subpixel-antialiased;
+        }
+
+        .wrapper {
+            width: 400px;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50.111%);
+            -webkit-transform: translate(-50%, -50.111%);
+            padding: 15px 0;
+        }
+
+        h2 {
+            color: #444 !important;
+        }
+
+        p {
+            font-family: "Roboto", Arial, sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 24px;
+            color: #272727;
+            text-rendering: auto;
+        }
+
+        img {
+            margin-bottom: 55px;
+        }
+
+        label {
+            text-align: left
+        }
+
+        button:not('.action') {
+            font-family: "Roboto", Arial, sans-serif;
+            width: 340px;
+            height: 20px;
+            text-align: left;
+            padding: 15px 20px;
+            background: #384b5f;
+            border: 1px solid #1c2937;
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            font-weight: 300;
+        }
+
+        button.button {
+            width: 380px;
+            height: auto;
+            text-align: center;
+            background: #e74b3b;
+            border: none;
+            text-transform: uppercase;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+        }
+
+        button.button:hover {
+            background: #f15849;
+            cursor: pointer;
+        }
+
+        *:focus {
+            outline: 0;
+        }
+
+        a {
+            display: inline-block;
+            padding-right: 10px;
+            color: #727272;
+            font-size: 14px;
+            float: right;
+            text-decoration: none;
+            font-weight: 300;
+        }
+
+        a:hover {
+            color: #A5A5A5;
+        }
+
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color:    #222;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color:    #222;
+            opacity:  1;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color:    #222;
+            opacity:  1;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            color:    #222;
+        }
+
+        .alert-message p {
+            margin-top: 8px;
+            margin-bottom: 0;
+            color: white;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        button.button.noCap {
+            text-transform: none;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .green {
+            background: #29b955;
+        }
+
+        .md-input-bar:before,
+        .md-input-bar:after {
+            background: #2196f3 !important;
+        }
+
+        .btn {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 24px !important;
+            /*color: #E74C3C;*/
+        }
+
+        .btn:hover, .btn:active, .btn:focus {
+            /*color: #222;*/
+        }
+
+        #logosvg {
+            position: absolute;
+            top: 35px;
+            left: 35px;
+        }
+
+        .l1 {
+            stroke-dasharray: 290;
+            stroke-dashoffset: 290;
+            animation: line 0.8s infinite ease-in-out;
+            -webkit-animation: line 0.8s infinite ease-in-out;
+        }
+
+        @keyframes line {
+            0% {
+                stroke-dashoffset: 290;
+            }
+            50% {
+                stroke-dashoffset: 0;
+            }
+            100% {
+                stroke-dashoffset: -290;
+            }
+        }
+        .loader {
+            height: 75px;
+            width: 100%;
+        }
+        .loader:before {
+            content: '';
+            padding-top: 50px !important;
+        }
+        .loader svg {
+            position: relative;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        .loader svg line {
+            stroke: #000;
+            stroke-width: 5;
+            stroke-linecap: round;
+        }
+        .bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            font-size: 12px;
+            font-family: "Roboto", Arial, sans-serif;
+            margin: 0 0 5px 15px;
+            color: rgba(0,0,0,0.5);
+        }
+    </style>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/vendor.js"></script>
+    <script src="/js/truRequire.js"></script>
+</head>
+<body>
+
+<a href="/" ><img src="/img/logo.png" alt="Trevyro Logo" style="display: block; position: absolute; top: 15px; left: 15px; height: 75px" /></a>
+
+<div class="wrapper">
+    <div class="slides">
+        <div class="slide">
+            <h2 style="margin-bottom: 18px;">Welcome</h2>
+            <p style="text-align: left;">
+                Lets get you up and running. Lets guide you through the process of installing Trevyro.
+                Don't worry, its pretty painless.
+            </p>
+
+            <button class="btn md-btn md-btn-wave md-btn-success" data-next>Lets Start</button>
+        </div>
+
+        {{#isNotTrue isDocker}}
+            <div class="slide hide">
+                <h2 style="margin-bottom: 25px;">ElasticSearch Connection</h2>
+                <p style="text-align: left;">
+                    It allows us to search. Its optional, but you should probably set up the connection.
+                </p>
+                <form id="elasticConnection" class="uk-form-stacked uk-clearfix">
+                    <div class="uk-margin-medium-bottom">
+                        <label for="elastic-host">Server</label>
+                        <input id="elastic-host" name="elastic-host" class="md-input" type="text" value="http://localhost" />
+                    </div>
+                    <div class="uk-margin-medium-bottom">
+                        <label for="elastic-port">Port</label>
+                        <input id="elastic-port" name="elastic-port" class="md-input" type="text" value="9200"/>
+                    </div>
+                    <button class="btn md-btn md-btn-wave md-btn-primary" type="button" id="test-elastic-connection">Test Connection!</button>
+                </form>
+
+                <div class="uk-clearfix">
+                    <a href="#" id="btn-skip-elastic" class="no-ajaxy uk-float-left">Skip ElasticSearch</a>
+                    <a href="https://www.elastic.co/products/elasticsearch" class="no-ajaxy" target="_blank">What is ElasticSearch?</a>
+                </div>
+            </div>
+            <div class="slide hide">
+                <h2 style="margin-bottom: 25px;">MongoDB Connection</h2>
+                <p style="text-align: left;">
+                    We've got to store the data somewhere. We've chosen MongoDB as our backend storage.
+                    Just enter your connection information below and lets get connected.
+                </p>
+                <form id="mongoConnection" class="uk-form-stacked uk-clearfix">
+                    <div class="uk-margin-medium-bottom">
+                        <label for="mongo-server">Server</label>
+                        <input id="mongo-server" name="mongo-server" class="md-input" type="text" value="localhost" />
+                    </div>
+                    <div class="uk-margin-medium-bottom">
+                        <label for="mongo-port">Port</label>
+                        <input id="mongo-port" name="mongo-port" class="md-input" type="text" value="27017"/>
+                    </div>
+                    <div class="uk-margin-medium-bottom">
+                        <label for="mongo-username">Username</label>
+                        <input id="mongo-username" name="mongo-username" class="md-input" type="text" value="trevyro"/>
+                    </div>
+                    <div class="uk-margin-medium-bottom">
+                        <label for="mongo-password">Password</label>
+                        <input id="mongo-password" name="mongo-password" class="md-input" type="password" value="#TruDesk1$" />
+                    </div>
+                    <div class="uk-margin-medium-bottom">
+                        <label for="mongo-database">Database</label>
+                        <input id="mongo-database" name="mongo-database" class="md-input" type="text"  value="trevyro"/>
+                    </div>
+                    <button class="btn md-btn md-btn-wave md-btn-primary" type="button" id="test-mongo-connection">Test Connection!</button>
+                </form>
+                <a href="https://www.mongodb.com/" class="no-ajaxy" target="_blank">What is MongoDB?</a>
+            </div>
+        {{/isNotTrue}}
+        {{#isNotTrue isDocker}}
+            <div class="slide hide">
+                <h2 style="margin-bottom: 25px;">Existing Database?</h2>
+                <p style="text-align: left; margin-bottom: 20px;">
+                    Is this mongodb connection an existing database or a new database?
+                </p>
+                <button class="btn md-btn md-btn-wave md-btn-success" type="button" style="margin: 0 0 10px 0 !important;" data-next>New Database</button>
+                <button class="btn md-btn md-btn-wave md-btn-primary" type="button" id="existing-database-btn" style="margin: 0;">Existing Database</button>
+            </div>
+        {{/isNotTrue}}
+
+        <div class="slide hide">
+            <h2 style="margin-bottom: 25px;">Setup Account</h2>
+            <p style="text-align: left;">
+                Now that we got you connected, its time to create an Administrator.
+            </p>
+
+            <form id="adminAccount" class="uk-form-stacked uk-clearfix">
+                <div class="uk-margin-medium-bottom">
+                    <label for="admin-username">Username</label>
+                    <input type="text" id="admin-username" name="admin-username" class="md-input" />
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <label for="admin-fullname">Full Name</label>
+                    <input type="text" id="admin-fullname" name="admin-fullname" class="md-input" />
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" name="admin-password" class="md-input" />
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <label for="admin-cpassword">Confirm Password</label>
+                    <input type="password" id="admin-cpassword" name="admin-cpassword" class="md-input" />
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" name="admin-email" class="md-input" />
+                </div>
+
+                <button class="btn md-btn md-btn-wave md-btn-primary" type="button" id="set-admin-account">Create Admin</button>
+            </form>
+        </div>
+        <div id="installingSlide" class="slide hide">
+            <h2 style="margin-bottom: 25px;">Installing...</h2>
+            <p style="text-align: left;">Putting it all together. Trevyro is currently building itself and powering up its engine. Please wait, this may take a minute.</p>
+            <div class="loader">
+                <svg style="width: 140px; " viewBox="0 0 288.9 70.1">
+                    <line class="l1" x1="0" y1="0" x2="288" y2="0"></line>
+                </svg>
+            </div>
+        </div>
+        <div id="savingConfig" class="slide hide">
+            <h2 style="margin-bottom: 25px;">Saving Configuration...</h2>
+            <p style="text-align: left;">Currently writing trevyro configuration file to an existing MongoDB connection. Please wait, this should only take a second.</p>
+            <div class="loader">
+                <svg style="width: 140px; " viewBox="0 0 288.9 70.1">
+                    <line class="l1" x1="0" y1="0" x2="288" y2="0"></line>
+                </svg>
+            </div>
+        </div>
+        <div id="restartSlide" class="slide hide">
+            <h2 style="margin-bottom: 25px;">Time to Restart</h2>
+            <p style="text-align: left;"><i>So here we are, together sharpening a knife.</i> Trevyro needs to restart to come out of install mode. Just restart it and you should get a login screen. (hopefully)!</p>
+            <button class="btn md-btn md-btn-wave" type="button" id="restartTrevyro">restart me!</button>
+        </div>
+        <div id="errorSlide" class="slide hide">
+            <h2 style="margin-bottom: 25px;">Crap! Something funky happened.</h2>
+            <p style="text-align: justify;">
+                Alright. This entire install script is in <i>beta</i>. Didn't I mention that? Anyway, there are a couple of options below to try and resolve the issue. There are some common pit falls and workarounds
+                in the docs that may help. Submitting the issue will help identify any bugs in the script and will help others as well.
+            </p>
+            <pre style="text-align: left; font-size: 11px; font-weight: normal; margin-bottom: 15px;"></pre>
+            <div style="width: 100%;">
+                <a href="https://www.github.com/polonel/trevyro/issues/new" target="_blank" style="width: 100%; padding: 0; margin: 0;">
+                    <button class="btn md-btn md-btn-wave md-btn-danger" type="button" style="width: 100%; margin-bottom: 10px !important;">I think I should submit this issue.</button>
+                </a>
+                <button class="btn md-btn md-btn-wave md-btn-success" type="button" style="width: 100%; margin-bottom: 10px !important;" onclick="location.reload();">I think i will start over.</button>
+                <a href="https://github.com/polonel/trevyro/blob/master/README.md" target="_blank" style="width: 100%; padding: 0; margin: 0;">
+                    <button class="btn md-btn md-btn-wave" type="button" style="width: 100%; margin-bottom: 10px !important;">or maybe i should read the docs!</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bottom">
+    {{bottom}}
+</div>
+
+<script type="text/javascript">
+    window.truRequire(['jquery', 'snackbar', 'helpers'], function(loadedModules) {
+        var $ = loadedModules[0];
+        window.Snackbar = loadedModules[1];
+        var helpers = loadedModules[2];
+
+        $(document).ready(function() {
+            helpers.init();
+            var $slides = $('.slides > .slide');
+            var totalSlides = 0;
+            var activeSlide = 0;
+            $slides.each(function(idx) {
+                $(this).addClass('slide-' + idx);
+                if (idx === 0)
+                    $(this).addClass('activeSlide');
+                else
+                    $(this).addClass('hide');
+
+                totalSlides++;
+            });
+
+            $('button[data-next]').click(function() {
+                if (isDoubleClicked($(this))) return;
+                var nextSlideIdx = activeSlide + 1;
+                var nextSlide = $('.slide-' + nextSlideIdx);
+                if (nextSlide.length > 0) {
+                    $(this).parents('.slide').fadeOut(300, function() {
+                        nextSlide.css({display: 'none'}).removeClass('hide');
+                        $(this).addClass('hide').removeClass('activeSlide');
+                        nextSlide.fadeIn(300, function() {
+                            nextSlide.addClass('activeSlide');
+                        });
+                    });
+                    activeSlide++;
+                }
+            });
+
+            var mongoConnection = undefined;
+            var elasticConnection = undefined;
+            var adminAccount = undefined;
+
+            $('a#btn-skip-elastic').click(function(e) {
+                e.preventDefault();
+
+                elasticConnection = {
+                    enable: false
+                };
+
+                advanceSlide();
+            });
+
+            $('button#existing-database-btn').click(function() {
+                if (isDoubleClicked($(this))) return;
+
+                var $thisSlide = $('.activeSlide');
+                var $savingConfig = $('#savingConfig');
+                $thisSlide.fadeOut(300, function() {
+                    $thisSlide.removeClass('activeSlide').addClass('hide');
+                    $savingConfig.css({display: 'none'}).removeClass('hide');
+                    $savingConfig.fadeIn(300, function() {
+                        $savingConfig.addClass('activeSlide');
+                    });
+                });
+
+                setTimeout(function() {
+                    var mongoFormData = $('form#mongoConnection').serializeObject();
+                    $.ajax({
+                        method: 'POST',
+                        url: '/install/existingdb',
+                        data: {
+                            host: mongoFormData['mongo-server'],
+                            port: mongoFormData['mongo-port'],
+                            username: mongoFormData['mongo-username'],
+                            password: mongoFormData['mongo-password'],
+                            database: mongoFormData['mongo-database'],
+                            elasticEnable: elasticConnection.enable,
+                            elasticHost: elasticConnection.host,
+                            elasticPort: elasticConnection.port
+                        },
+                        error: function(e) {
+                            window.Snackbar.show({
+                                text: 'Unable to save configuration!',
+                                actionTextColor: 'red'
+                            });
+
+                            console.log(e);
+                        },
+                        success: function(data) {
+                            if (!data.success) {
+                                window.Snackbar.show({
+                                    text: 'Unable to save configuration!',
+                                    actionTextColor: 'red'
+                                });
+
+                                console.log(data);
+                            } else {
+                                window.Snackbar.show({
+                                    text: 'Configuration File Saved!'
+                                });
+                                var $savingConfig = $('#savingConfig');
+                                var $restartSlide = $('#restartSlide');
+                                $savingConfig.fadeOut(300, function() {
+                                    $savingConfig.addClass('hide');
+                                    $restartSlide.css({display: 'none'}).removeClass('hide');
+                                    $restartSlide.fadeIn(300, function() {
+                                        $restartSlide.addClass('activeSlide');
+                                    });
+                                });
+                            }
+                        }
+                    });
+                }, 1000);
+            });
+
+            $('button#test-elastic-connection').click(function() {
+                if (isDoubleClicked($(this))) return;
+                var $connectBtn = $(this);
+                $connectBtn.prop('disabled', true).text('Trying to connect...');
+                var elasticFormData = $('form#elasticConnection').serializeObject();
+                
+                $.ajax({
+                    method: 'POST',
+                    url: '/install/elastictest',
+                    data: {
+                        host: elasticFormData['elastic-host'],
+                        port: elasticFormData['elastic-port']
+                    },
+                    error: function(e) {
+                        $connectBtn.prop('disabled', false).text('Test Connection');
+                        window.Snackbar.show({
+                            text: 'Couldn\t connect; make sure connection is correct.',
+                            actionTextColor: 'red'
+                        });
+                        console.error(e);
+                    },
+                    success: function(data) {
+                        if (!data.success) {
+                            window.Snackbar.show({
+                                text: 'Couldn\t connect; make sure connection is correct.',
+                                actionTextColor: 'red'
+                            });
+                            $connectBtn.prop('disabled', false).text('Test Connection!');
+                        } else {
+                            elasticConnection = {
+                                enable: true,
+                                host: elasticFormData['elastic-host'],
+                                port: elasticFormData['elastic-port']
+                            };
+
+                            window.Snackbar.show({
+                                text: 'ElasticSearch Connection Successful!'
+                            });
+
+                            advanceSlide();
+                        }
+                    }
+                })
+            });
+
+            $('button#test-mongo-connection').click(function() {
+                if (isDoubleClicked($(this))) return;
+                var $connectBtn = $(this);
+                $connectBtn.prop('disabled', true).text('Trying to connect...');
+                var mongoFormData = $('form#mongoConnection').serializeObject();
+                $.ajax({
+                    method: 'POST',
+                    url: '/install/mongotest',
+                    data: {
+                        host: mongoFormData['mongo-server'],
+                        port: mongoFormData['mongo-port'],
+                        username: mongoFormData['mongo-username'],
+                        password: mongoFormData['mongo-password'],
+                        database: mongoFormData['mongo-database']
+                    },
+                    error: function(e) {
+                        $connectBtn.prop('disabled', false).text('Test Connection!');
+                        window.Snackbar.show({
+                            text: 'Couldn\'t connect; make sure connection is correct.',
+                            actionTextColor: 'red'
+                        });
+                        console.error(e);
+                    },
+                    success: function(data) {
+                        if (!data.success) {
+                            window.Snackbar.show({
+                                text: 'Couldn\'t connect; make sure connection is correct.',
+                                actionTextColor: 'red'
+                            });
+                            $connectBtn.prop('disabled', false).text('Test Connection!');
+                        } else {
+                            mongoConnection = {
+                                host: mongoFormData['mongo-server'],
+                                port: mongoFormData['mongo-port'],
+                                username: mongoFormData['mongo-username'],
+                                password: mongoFormData['mongo-password'],
+                                database: mongoFormData['mongo-database']
+                            };
+
+                            window.Snackbar.show({
+                                text: 'MongoDB Connection Successful!'
+                            });
+
+                            //Advance to next slide
+                            var nextSlideIdx = activeSlide + 1;
+                            var nextSlide = $('.slide-' + nextSlideIdx);
+                            if (nextSlide.length > 0) {
+                                $connectBtn.parents('.slide').fadeOut(300, function() {
+                                    nextSlide.css({display: 'none'}).removeClass('hide');
+                                    $(this).addClass('hide').removeClass('activeSlide');
+                                    nextSlide.fadeIn(300, function() {
+                                        nextSlide.addClass('activeSlide');
+                                    });
+                                });
+                                activeSlide++;
+                            }
+                        }
+                    }
+                });
+            });
+
+            function advanceSlide() {
+                var $active = $('.activeSlide');
+                var nextSlideIdx = activeSlide + 1;
+                var nextSlide = $('.slide-' + nextSlideIdx);
+                if (nextSlide.length > 0) {
+                    $active.fadeOut(300, function() {
+                        nextSlide.css({display: 'none'}).removeClass('hide');
+                        $(this).addClass('hide').removeClass('activeSlide');
+                        nextSlide.fadeIn(300, function() {
+                            nextSlide.addClass('activeSlide');
+                        });
+                    });
+                    activeSlide++;
+                }
+            }
+
+            $('button#set-admin-account').click(function() {
+                if (isDoubleClicked($(this))) return;
+
+                var adminInfoFormData = $('form#adminAccount').serializeObject();
+                var $usernameField, $fullnameField, $passwordField, $confirmPasswordField, $emailField;
+                var $usernameValid = false, $fullnameValid = false, $passwordValid = false, $confirmPasswordValid = false, $emailValid = false;
+
+                if (!adminInfoFormData['admin-username'] || (adminInfoFormData['admin-username'].length < 4)) {
+                    $usernameField = $('form#adminAccount').find('input#admin-username');
+                    $usernameField.parent('.md-input-wrapper').addClass('has-error');
+                    $usernameField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $usernameField.addClass('uk-form-danger');
+                } else {
+                    $usernameField = $('form#adminAccount').find('input#admin-username');
+                    $usernameField.parent('.md-input-wrapper').removeClass('has-error');
+                    $usernameField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $usernameField.removeClass('uk-form-danger');
+
+                    $usernameValid = true;
+                }
+
+                if (!adminInfoFormData['admin-fullname'] || (adminInfoFormData['admin-fullname'].length < 1)) {
+                    $fullnameField = $('form#adminAccount').find('input#admin-fullname');
+                    $fullnameField.parent('.md-input-wrapper').addClass('has-error');
+                    $fullnameField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $fullnameField.addClass('uk-form-danger');
+                } else {
+                    $fullnameField = $('form#adminAccount').find('input#admin-fullname');
+                    $fullnameField.parent('.md-input-wrapper').removeClass('has-error');
+                    $fullnameField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $fullnameField.removeClass('uk-form-danger');
+
+                    $fullnameValid = true;
+                }
+
+                if (!adminInfoFormData['admin-password'] || (adminInfoFormData['admin-password'].length < 4)) {
+                    $passwordField = $('form#adminAccount').find('input#admin-password');
+                    $passwordField.parent('.md-input-wrapper').addClass('has-error');
+                    $passwordField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $passwordField.addClass('uk-form-danger');
+                } else {
+                    $passwordField = $('form#adminAccount').find('input#admin-password');
+                    $passwordField.parent('.md-input-wrapper').removeClass('has-error');
+                    $passwordField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $passwordField.removeClass('uk-form-danger');
+                    
+                    $passwordValid = true;
+                }
+
+                if (!adminInfoFormData['admin-cpassword'] || (adminInfoFormData['admin-cpassword'] !== adminInfoFormData['admin-password'])) {
+                    $confirmPasswordField = $('form#adminAccount').find('input#admin-cpassword');
+                    $confirmPasswordField.parent('.md-input-wrapper').addClass('has-error');
+                    $confirmPasswordField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $confirmPasswordField.addClass('uk-form-danger');
+                } else {
+                    $confirmPasswordField = $('form#adminAccount').find('input#admin-cpassword');
+                    $confirmPasswordField.parent('.md-input-wrapper').removeClass('has-error');
+                    $confirmPasswordField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $confirmPasswordField.removeClass('uk-form-danger');
+
+                    $confirmPasswordValid = true;
+                }
+
+                if (!adminInfoFormData['admin-email'] || (!validateEmail(adminInfoFormData['admin-email']))) {
+                    $emailField = $('form#adminAccount').find('input#admin-email');
+                    $emailField.parent('.md-input-wrapper').addClass('has-error');
+                    $emailField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $emailField.addClass('uk-form-danger');
+                } else {
+                    $emailField = $('form#adminAccount').find('input#admin-email');
+                    $emailField.parent('.md-input-wrapper').removeClass('has-error');
+                    $emailField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $emailField.removeClass('uk-form-danger');
+
+                    $emailValid = true;
+                }
+
+                if (!$usernameValid ||
+                    !$fullnameValid ||
+                    !$passwordValid ||
+                    !$confirmPasswordValid ||
+                    !$emailValid)
+                    return false;
+
+                adminAccount = {
+                    username: $('#admin-username').val(),
+                    fullname: $('#admin-fullname').val(),
+                    password: $('#admin-password').val(),
+                    cpassword: $('#admin-cpassword').val(),
+                    email: $('#admin-email').val()
+                };
+
+                advanceSlide();
+
+                //Send the install POST wait for Response...
+                setTimeout(function() {
+                    sendInstall();
+                }, 3000);
+            });
+
+            $('button#restartTrevyro').click(function() {
+                var $restartSlide = $('#restartSlide');
+                $restartSlide.find('h2').html('Restarting...');
+                $restartSlide.find('p').css('text-align', 'center').html('I\'m restarting now... Give me about 10seconds!');
+                $restartSlide.find('button').hide();
+
+                setTimeout(function() {
+                    window.location.reload();
+                }, 10000);
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/install/restart',
+                    data: {
+
+                    }
+                });
+            });
+
+            function sendInstall() {
+                $.ajax({
+                    method: 'POST',
+                    url: '/install',
+                    data: {
+                        mongo: mongoConnection,
+                        account: adminAccount,
+                        elastic: elasticConnection
+                    },
+                    success: function(response) {
+                        window.Snackbar.show({
+                            text: 'We did it! Everything is all set up!'
+                        });
+
+                        var $installingSlide = $('#installingSlide');
+                        var $restartSlide = $('#restartSlide');
+                        $installingSlide.fadeOut(300, function() {
+                            $installingSlide.addClass('hide');
+                            $restartSlide.css({display: 'none'}).removeClass('hide');
+                            $restartSlide.fadeIn(300, function() {
+                                $restartSlide.addClass('activeSlide');
+                            });
+                        });
+
+                    },
+                    error: function(response) {
+//                    window.Snackbar.show({
+//                        text: response.responseText,
+//                        actionTextColor: '#FF4835'
+//                    });
+
+                        var $active = $('.activeSlide');
+                        var errorSlide = $('#errorSlide');
+                        if (errorSlide.length > 0) {
+                            errorSlide.find('pre').html(response.responseText);
+                            $active.fadeOut(300, function() {
+                                errorSlide.css({display: 'none'}).removeClass('hide');
+                                $(this).addClass('hide').removeClass('activeSlide');
+                                errorSlide.fadeIn(300, function() {
+                                    errorSlide.addClass('activeSlide');
+                                });
+                            });
+                            activeSlide++;
+                        }
+                    }
+                });
+            }
+
+            function isDoubleClicked(element) {
+                //if already clicked return TRUE to indicate this click is not allowed
+                if (element.data("isclicked")) return true;
+
+                //mark as clicked for 1 second
+                element.data("isclicked", true);
+                setTimeout(function () {
+                    element.removeData("isclicked");
+                }, 1000);
+
+                //return FALSE to indicate this click was allowed
+                return false;
+            }
+
+            function validateEmail(email) {
+                var mailFormat = /^\w+([.-]\w+)*@\w+([.-]\w+)*(\.\w+)+$/;
+                return email.match(mailFormat);
+            }
+
+            $.fn.serializeObject = function(){
+                var obj = {};
+
+                $.each( this.serializeArray(), function(i,o){
+                    var n = o.name,
+                            v = o.value;
+
+                    obj[n] = obj[n] === undefined ? v
+                            : $.isArray( obj[n] ) ? obj[n].concat( v )
+                                    : [ obj[n], v ];
+                });
+
+                return obj;
+            };
+        });
+    });
+</script>
+</body>
+</html>
